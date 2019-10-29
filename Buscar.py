@@ -130,10 +130,11 @@ url = 'https://consultaremedios.com.br/busca?termo='
 
 
 while(True):
-    os.system('cls') or None
+    
     url = 'https://consultaremedios.com.br/busca?termo='
     print('=======================================================================')
     read = input('Leia o código de barras: ')
+    os.system('cls') or None
     if(read == ''):
         print("Digite um código de barras")
     else:
@@ -142,3 +143,4 @@ while(True):
             site(url)
         except:
             print("Algo deu errado. \nVerifique se o código de barras digitado está correto.")
+
