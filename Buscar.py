@@ -1,10 +1,8 @@
 from bs4 import BeautifulSoup
 import urllib.request
-from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
-import time
 import re
-import string
+import os
+
 
 def NameRemoveText(text):
     text = str(text)
@@ -41,16 +39,17 @@ def search(bs, cod, preco, nome, loja):
     for buy in range(0, lj):
         if re.search('\\b'+loja[buy]+'\\b', str(bs), re.IGNORECASE):
             jl.append(str(loja[buy]))
-            print('Loja: '+ jl[buy] + '                                                            Preco: '+ pc[buy] )
+            print("{0:>30}".format(jl[buy]) + "{0:>30}".format(pc[buy]))
+            #print('Loja: '+ jl[buy] + '                                                            Preco: '+ pc[buy] )
         else:
             pass 
 
-url = 'https://consultaremedios.com.br/busca?termo='
-#url = 'https://consultaremedios.com.br/busca?termo=7894916512718'
-#url = 'https://consultaremedios.com.br/advil-400mg/p'
+
 def site(url):
-    read = input('Leia o código de barras: ')
-    url = url + str(read) # headers={'User-Agent': 'Mozilla'}
+   
+   #url = url + str(read) # headers={'User-Agent': 'Mozilla'}
+
+
     req = urllib.request.Request(url, data=None,headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'})    
 
     html = urllib.request.urlopen(req)
@@ -108,7 +107,7 @@ def site(url):
         
 
     #print(bz)
-    print(key[0])
+    #print(key[0])
     #print(buy)
     #print(desc)
     #print(store)
@@ -124,5 +123,22 @@ def site(url):
         print("Passo : "+ str(passo))
         search(bs[passo], key[passo], buy, desc, store)
         '''
-        
-a = site(url)
+
+url = 'https://consultaremedios.com.br/busca?termo='
+#url = 'https://consultaremedios.com.br/busca?termo=7894916512718'
+#url = 'https://consultaremedios.com.br/advil-400mg/p'
+
+
+while(True):
+    os.system('cls') or None
+    url = 'https://consultaremedios.com.br/busca?termo='
+    print('=======================================================================')
+    read = input('Leia o código de barras: ')
+    if(read == ''):
+        print("Digite um código de barras")
+    else:
+        try:
+            url = url + str(read)
+            site(url)
+        except:
+            print("Algo deu errado. \nVerifique se o código de barras digitado está correto.")
